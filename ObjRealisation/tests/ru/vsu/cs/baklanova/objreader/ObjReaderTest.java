@@ -1,10 +1,13 @@
-package ru.vsu.cs.baklanova.objrealisation;
+package ru.vsu.cs.baklanova.objreader;
 
 import ru.vsu.cs.baklanova.Math.vector.Vector2D;
 import ru.vsu.cs.baklanova.Math.vector.Vector3D;
 import ru.vsu.cs.baklanova.model.Polygon;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.vsu.cs.baklanova.objreader.IncorrectFileException;
+import ru.vsu.cs.baklanova.objreader.ObjReader;
+import ru.vsu.cs.baklanova.objreader.ObjReaderException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +20,9 @@ class ObjReaderTest {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
         Vector3D result = ObjReader.parseVertex(wordsInLineWithoutToken, 5);
         Vector3D expectedResult = new Vector3D(1.01f, 1.02f, 1.03f);
-        Assertions.assertTrue(result.equals(expectedResult));
+        Assertions.assertEquals(expectedResult.get(0), result.get(0), 10e-50);
+        Assertions.assertEquals(expectedResult.get(1), result.get(1), 10e-50);
+        Assertions.assertEquals(expectedResult.get(2), result.get(2), 10e-50);
     }
 
     @Test
@@ -63,9 +68,11 @@ class ObjReaderTest {
     @Test
     public void testParseTextureVertex01() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
-        Vector2D result = ObjReader.parseTextureVertex(wordsInLineWithoutToken, 5);
-        Vector2D expectedResult = new Vector2D(1.01f, 1.02f);
-        Assertions.assertEquals(result, expectedResult);
+        Vector3D result = ObjReader.parseTextureVertex(wordsInLineWithoutToken, 5);
+        Vector3D expectedResult = new Vector3D(1.01f, 1.02f, 1.03f);
+        Assertions.assertEquals(expectedResult.get(0), result.get(0), 10e-50);
+        Assertions.assertEquals(expectedResult.get(1), result.get(1), 10e-50);
+        Assertions.assertEquals(expectedResult.get(2), result.get(2), 10e-50);
     }
 
     /*@Test
@@ -114,7 +121,9 @@ class ObjReaderTest {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
         Vector3D result = ObjReader.parseNormal(wordsInLineWithoutToken, 5);
         Vector3D expectedResult = new Vector3D(1.01f, 1.02f, 1.03f);
-        Assertions.assertTrue(result.equals(expectedResult));
+        Assertions.assertEquals(expectedResult.get(0), result.get(0), 10e-50);
+        Assertions.assertEquals(expectedResult.get(1), result.get(1), 10e-50);
+        Assertions.assertEquals(expectedResult.get(2), result.get(2), 10e-50);
     }
 
     @Test

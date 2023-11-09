@@ -33,7 +33,7 @@ public class ObjWriter {
         ArrayList<Vector3D> vertices = model.vertices;
         ArrayList<Vector3D> normals = model.normals;
         ArrayList<Polygon> polygons = model.polygons;
-        ArrayList<Vector2D> textureVertices = model.textureVertices;
+        ArrayList<Vector3D> textureVertices = model.textureVertices;
 
         checkVerticesExistence(vertices);
 
@@ -69,12 +69,12 @@ public class ObjWriter {
 
     }
 
-    protected static StringBuilder getStringTextureVerticesContent(ArrayList<Vector2D> textureVertices) {
+    protected static StringBuilder getStringTextureVerticesContent(ArrayList<Vector3D> textureVertices) {
         StringBuilder str = new StringBuilder();
         if (textureVertices == null || textureVertices.isEmpty()) {
             return str;
         }
-        for (Vector2D vt : textureVertices) {
+        for (Vector3D vt : textureVertices) {
             str.append(OBJ_TEXTURE_TOKEN + " " + vt.coordstoStringSplitBySpace() +  "\n");
         }
         str.append("# " + textureVertices.size() + " texture coords\n");

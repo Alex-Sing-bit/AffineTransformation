@@ -1,4 +1,4 @@
-package ru.vsu.cs.baklanova.objrealisation.MathTests;
+package ru.vsu.cs.baklanova.MathTests;
 import static org.junit.Assert.*;
 
 import ru.vsu.cs.baklanova.Math.vector.Vector2D;

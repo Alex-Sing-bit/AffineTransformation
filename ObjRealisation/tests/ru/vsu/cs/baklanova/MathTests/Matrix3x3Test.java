@@ -1,4 +1,4 @@
-package ru.vsu.cs.baklanova.objrealisation.MathTests;
+package ru.vsu.cs.baklanova.MathTests;
 
 import ru.vsu.cs.baklanova.Math.matrix.Matrix3x3;
 import ru.vsu.cs.baklanova.Math.vector.Vector3D;

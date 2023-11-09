@@ -1,4 +1,4 @@
-package ru.vsu.cs.baklanova.objrealisation;
+package ru.vsu.cs.baklanova.objreader;
 
 import ru.vsu.cs.baklanova.Math.vector.Vector2D;
 import ru.vsu.cs.baklanova.Math.vector.Vector3D;
@@ -18,7 +18,7 @@ public class ObjReader {
 
 	public static Model read(String fileContent) throws IncorrectFileException {
 		ArrayList<Vector3D> vertices = new ArrayList<>();
-		ArrayList<Vector2D> textureVertices = new ArrayList<>();
+		ArrayList<Vector3D> textureVertices = new ArrayList<>();
 		ArrayList<Vector3D> normals = new ArrayList<>();
 		ArrayList<Polygon> polygons = new ArrayList<>();
 		int lineInd = 0;
@@ -73,14 +73,15 @@ public class ObjReader {
 		}
 	}
 
-	protected static Vector2D parseTextureVertex(final ArrayList<String> wordsInLineWithoutToken, int lineInd) {
+	protected static Vector3D parseTextureVertex(final ArrayList<String> wordsInLineWithoutToken, int lineInd) {
 		if (wordsInLineWithoutToken.size()>3){
 			throw new ObjReaderException("Too many texture vertex arguments.", lineInd);
 		}
 		try {
-			return new Vector2D(
+			return new Vector3D(
 					Float.parseFloat(wordsInLineWithoutToken.get(0)),
-					Float.parseFloat(wordsInLineWithoutToken.get(1)));
+					Float.parseFloat(wordsInLineWithoutToken.get(1)),
+					Float.parseFloat(wordsInLineWithoutToken.get(2)));
 
 		} catch(NumberFormatException e) {
 			throw new ObjReaderException("Failed to parse float value.", lineInd);

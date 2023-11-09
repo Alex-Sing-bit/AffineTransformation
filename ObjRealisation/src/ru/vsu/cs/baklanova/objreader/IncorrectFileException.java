@@ -1,4 +1,4 @@
-package ru.vsu.cs.baklanova.objrealisation;
+package ru.vsu.cs.baklanova.objreader;
 
 public class IncorrectFileException extends Exception{
     public IncorrectFileException(String additionString){
