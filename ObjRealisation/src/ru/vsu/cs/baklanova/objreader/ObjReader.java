@@ -57,7 +57,7 @@ public class ObjReader {
 
 	// Всем методам кроме основного я поставил модификатор доступа protected, чтобы обращаться к ним в тестах
 	protected static Vector3D parseVertex(final ArrayList<String> wordsInLineWithoutToken, int lineInd) {
-		if (wordsInLineWithoutToken.size()>3){
+		if (wordsInLineWithoutToken.size() > 3){
 			throw new ObjReaderException("Too many vertex arguments.", lineInd);
 		}
 		try {
@@ -78,10 +78,17 @@ public class ObjReader {
 			throw new ObjReaderException("Too many texture vertex arguments.", lineInd);
 		}
 		try {
-			return new Vector3D(
-					Float.parseFloat(wordsInLineWithoutToken.get(0)),
-					Float.parseFloat(wordsInLineWithoutToken.get(1)),
-					Float.parseFloat(wordsInLineWithoutToken.get(2)));
+			if (wordsInLineWithoutToken.size() == 3) {
+				return new Vector3D(
+						Float.parseFloat(wordsInLineWithoutToken.get(0)),
+						Float.parseFloat(wordsInLineWithoutToken.get(1)),
+						Float.parseFloat(wordsInLineWithoutToken.get(2)));
+			} else {
+				return new Vector3D(
+						Float.parseFloat(wordsInLineWithoutToken.get(0)),
+						Float.parseFloat(wordsInLineWithoutToken.get(1)),
+						Float.parseFloat("0"));
+			}
 
 		} catch(NumberFormatException e) {
 			throw new ObjReaderException("Failed to parse float value.", lineInd);

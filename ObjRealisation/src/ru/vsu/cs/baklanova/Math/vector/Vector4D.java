@@ -14,6 +14,12 @@ public class Vector4D{
         this.w = w;
     }
 
+    public Vector4D(Vector3D vector) {
+        this.x = vector.get(0);
+        this.y = vector.get(1);
+        this.z = vector.get(2);
+        this.w = 1;
+    }
     public double get(int index) {
         switch (index){
             case 0: return x;
