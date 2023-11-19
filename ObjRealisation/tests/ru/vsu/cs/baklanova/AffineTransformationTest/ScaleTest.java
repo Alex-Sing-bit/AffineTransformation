@@ -13,11 +13,12 @@ import java.util.ArrayList;
 
 public class ScaleTest {
 
-    /*@Test
-    public void testScaleModel0() {
-        Model model = new Model(new ArrayList<Vector3D>(), new ArrayList<Vector3D>(), new ArrayList<Vector3D>(), new ArrayList<Polygon>());
-        Model result = Scale.scaleModel(model, new Vector3D(1.0, 1.0, 1.0));
-    }*/
+    @Test
+    public void testScaleEmptyModel() {
+        Model expextedModel = new Model(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        Model result = Scale.scaleModel(expextedModel, new Vector3D(1.0, 1.0, 1.0));
+        Assertions.assertEquals(expextedModel, result);
+    }
     @Test
     public void testScaleModel1() {
         ArrayList<Vector3D> vertex = new ArrayList<Vector3D>();
@@ -173,6 +174,22 @@ public class ScaleTest {
         } catch (NullPointerException ex) {
             String expectedError = "Vector is null";
             Assertions.assertEquals(expectedError, ex.getMessage());
+        }
+    }
+
+    @Test
+    public void testScaleMatrix() {
+        Matrix3x3 matrix = Scale.scaleMatrix(new Vector3D(-0.67, 123, 0));
+        double[][] result = matrix.getMatrix();
+        double[][] expectedResult = new double[][]{{-0.67, 0, 0}, {0, 123, 0}, {0, 0, 0}};
+        int expectedLength = expectedResult.length;
+        int expectedDepth = expectedResult[0].length;
+        Assertions.assertEquals(result.length, expectedLength);
+        Assertions.assertEquals(result[0].length, expectedDepth);
+        for (int i = 0; i < expectedLength; i++) {
+            for (int j = 0; j < expectedDepth; j++) {
+                Assertions.assertEquals(expectedResult[i][j], result[i][j], 10e-15);
+            }
         }
     }
 }
