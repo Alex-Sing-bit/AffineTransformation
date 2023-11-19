@@ -35,11 +35,10 @@ public class Main {
 
         Scale.scaleModel(model, new Vector3D(1, 2, 1));
 
-        Rotation.rotateModelDegrees(model, 'z', 90);
-        Rotation.rotateModelDegrees(model, 'z', -90);
-        Rotation.rotateModelDegrees(model, 'x', 45);
-        Rotation.rotateModelDegrees(model, 'y', 360);
-        Translation.translateModelRadiansForFewAxis(model, 10, 20, 30);
+        Rotation.rotateModelDegrees(model, 'x', 90);
+        //Rotation.rotateModelDegrees(model, 'y', 90);
+        //Rotation.rotateModelDegrees(model, 'z', 90);
+        //Translation.translateModelRadiansForFewAxis(model, 10, 20, 30);
 
         ObjWriter.write(model,"result");
     }

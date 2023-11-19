@@ -5,17 +5,16 @@ import ru.vsu.cs.baklanova.Math.vector.Vector3D;
 import ru.vsu.cs.baklanova.model.Model;
 
 public class Scale {
-    public static Model scaleModel(Model model, Vector3D vector) {
+    public static void scaleModel(Model model, Vector3D vector) {
         if (model == null) {
             throw new NullPointerException("Model is null");
         }
         if (vector == null) {
             throw new NullPointerException("Vector for multiplication is null");
         }
-        model.vertices.replaceAll(v -> scaleDot(v, vector));
-        model.normals.replaceAll(v -> scaleDot(v, vector));
-
-        return model;
+        Matrix3x3 scaleMatrix = scaleMatrix(vector);
+        model.vertices.replaceAll(scaleMatrix::multiply);
+        model.normals.replaceAll(scaleMatrix::multiply);
     }
 
     private static Vector3D scaleDot(Vector3D dot, Vector3D vector){

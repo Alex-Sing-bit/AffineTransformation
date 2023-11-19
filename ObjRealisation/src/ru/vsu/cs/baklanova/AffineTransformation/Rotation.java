@@ -5,40 +5,61 @@ import ru.vsu.cs.baklanova.Math.vector.Vector3D;
 import ru.vsu.cs.baklanova.model.Model;
 
 public class Rotation {
-    public static Model rotateModelDegrees(Model model, char axis, double cornerInDegrees) throws Exception {
-        return rotateModelRadians(model, axis, Math.toRadians(cornerInDegrees));
+    public static void rotateModelFewTimesDegrees(Model model, char[] axis, double[] anglesInDegrees) throws Exception {
+        if (model == null) {
+            throw new NullPointerException("Model is null");
+        }
+        if (axis.length != anglesInDegrees.length) {
+            throw new RotateExceptions("axis number not equal to angles");
+        }
+        for (int i = 0; i < axis.length; i++) {
+            anglesInDegrees[i] = Math.toRadians(anglesInDegrees[i]);
+        }
+        rotateModelFewTimesRadians(model, axis, anglesInDegrees);
     }
-    public static Model rotateModelRadians(Model model, char axis, double cornerInRadians) throws Exception {
+    public static void rotateModelFewTimesRadians(Model model, char[] axis, double[] anglesInRadians) throws Exception {
+        if (model == null) {
+            throw new NullPointerException("Model is null");
+        }
+        if (axis.length != anglesInRadians.length) {
+            throw new RotateExceptions("axis number not equal to angles");
+        }
+        for (int i = 0; i < axis.length; i++) {
+            rotateModelRadians(model, axis[i], anglesInRadians[i]);
+        }
+    }
+    public static void rotateModelDegrees(Model model, char axis, double angleInDegrees) throws RotateExceptions {
+        rotateModelRadians(model, axis, Math.toRadians(angleInDegrees));
+    }
+    public static void rotateModelRadians(Model model, char axis, double angleInRadians) throws RotateExceptions {
+        if (model == null) {
+            throw new NullPointerException("Model is null");
+        }
+        Matrix3x3 scaleMatrix = rotationMatrixInRadians(axis, angleInRadians);
+        model.vertices.replaceAll(scaleMatrix::multiply);
+        model.normals.replaceAll(scaleMatrix::multiply);
+
+    }
+
+    public static Matrix3x3 rotationMatrixInDegrees(char axis, double fi) throws RotateExceptions {
+        return rotationMatrixInRadians(axis, Math.toRadians(fi));
+    }
+    public static Matrix3x3 rotationMatrixInRadians(char axis, double fi) throws RotateExceptions {
         switch (axis) {
             case 'x', 'X' -> {
-                model.vertices.replaceAll(v -> rotateDot(v, 0, cornerInRadians));
-                model.normals.replaceAll(v -> rotateDot(v, 0, cornerInRadians));
+                return rotationMatrix(0, fi);
             }
             case 'y', 'Y' -> {
-                model.vertices.replaceAll(v -> rotateDot(v, 1, cornerInRadians));
-                model.normals.replaceAll(v -> rotateDot(v, 1, cornerInRadians));
+                return rotationMatrix(1, fi);
             }
             case 'z', 'Z' -> {
-                model.vertices.replaceAll(v -> rotateDot(v, 2, cornerInRadians));
-                model.normals.replaceAll(v -> rotateDot(v, 2, cornerInRadians));
+                return rotationMatrix(2, fi);
             }
-            default -> throw new Exception("Я ошибка в RotateModel, потому что указана неверная ось");
+            default -> throw new RotateExceptions("invalid axis specified");
         }
-
-        return model;
     }
 
-    private static Vector3D rotateDot(Vector3D dot, int axis, double fi) {
-        Matrix3x3 scaleMatrix = rotationMatrix(axis, fi);
-        dot = scaleMatrix.multiply(dot);
-
-        return dot;
-    }
-
-    public static Matrix3x3 rotationMatrixWithCornerInDegrees(int axis, double fi) {
-        return rotationMatrix(axis, Math.toRadians(fi));
-    }
-    public static Matrix3x3 rotationMatrix(int axis, double fi) {
+    private static Matrix3x3 rotationMatrix(int axis, double fi) {
         final int SIZE = 3;
         final double EXP = 10e-15;
         double[][] arr = new double[SIZE][SIZE];
