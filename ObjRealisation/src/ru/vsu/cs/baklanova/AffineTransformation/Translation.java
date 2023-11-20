@@ -1,53 +1,78 @@
 package ru.vsu.cs.baklanova.AffineTransformation;
 
-import ru.vsu.cs.baklanova.Math.matrix.Matrix3x3;
 import ru.vsu.cs.baklanova.Math.matrix.Matrix4x4;
 import ru.vsu.cs.baklanova.Math.vector.Vector3D;
 import ru.vsu.cs.baklanova.Math.vector.Vector4D;
 import ru.vsu.cs.baklanova.model.Model;
 
+import java.util.ArrayList;
+
 public class Translation {
     
-    public static Model translateModelRadians(Model model, char axis, double shift) throws Exception {
-        switch (axis) {
-            case 'x', 'X' -> {
-                model.vertices.replaceAll(v -> translateDot(v, 0, shift));
-                model.normals.replaceAll(v -> translateDot(v, 0, shift));
-            }
-            case 'y', 'Y' -> {
-                model.vertices.replaceAll(v -> translateDot(v, 1, shift));
-                model.normals.replaceAll(v -> translateDot(v, 1, shift));
-            }
-            case 'z', 'Z' -> {
-                model.vertices.replaceAll(v -> translateDot(v, 2, shift));
-                model.normals.replaceAll(v -> translateDot(v, 2, shift));
-            }
-            default -> throw new Exception("Я ошибка в TranslateModel, потому что указана неверная ось");
+    public static Model translateModel(Model model1, char axis, double shift) throws Exception {
+        if (model1 == null) {
+            throw new NullPointerException("Model is null");
         }
 
+        Model model = new Model(new ArrayList<>(model1.vertices), new ArrayList<>(model1.textureVertices),
+                new ArrayList<>(model1.normals), new ArrayList<>(model1.polygons));
+
+        Matrix4x4 translateMatrix = translateMatrix(axis, shift);
+
+        model.vertices.replaceAll(v -> translateDot(v,  translateMatrix));
+        model.normals.replaceAll(v -> translateDot(v, translateMatrix));
+
         return model;
     }
 
-    public static Model translateModelRadiansForFewAxis(Model model, double shiftX, double shiftY, double shiftZ) throws Exception {
-        model.vertices.replaceAll(v -> translateDotForFewAxis(v, shiftX, shiftY, shiftZ));
-        model.normals.replaceAll(v -> translateDotForFewAxis(v, shiftX, shiftY, shiftZ));
+    public static Model translateModelForFewAxis(Model model1, double shiftX, double shiftY, double shiftZ) {
+        if (model1 == null) {
+            throw new NullPointerException("Model is null");
+        }
+        Model model = new Model(new ArrayList<>(model1.vertices), new ArrayList<>(model1.textureVertices),
+                new ArrayList<>(model1.normals), new ArrayList<>(model1.polygons));
+
+        Matrix4x4 translateMatrix = translateMatrixForFewAxis(shiftX, shiftY, shiftZ);
+
+        model.vertices.replaceAll(v -> translateDotForFewAxis(v, translateMatrix));
+        model.normals.replaceAll(v -> translateDotForFewAxis(v, translateMatrix));
 
         return model;
     }
-    private static Vector3D translateDot(Vector3D dot, int axis, double shift) {
-        Matrix4x4 scaleMatrix = translateMatrix(axis, shift);
-        Vector4D v = scaleMatrix.multiply(new Vector4D(dot));
+    private static Vector3D translateDot(Vector3D dot, Matrix4x4 translateMatrix) {
+        if (dot == null) {
+            throw new NullPointerException("Dot vector is null");
+        }
+        Vector4D v = translateMatrix.multiply(new Vector4D(dot));
 
         return new Vector3D(v.get(0), v.get(1), v.get(2));
     }
 
-    private static Vector3D translateDotForFewAxis(Vector3D dot, double shiftX, double shiftY, double shiftZ) {
-        Matrix4x4 scaleMatrix = translateMatrixForFewAxis(shiftX, shiftY, shiftZ);
-        Vector4D v = scaleMatrix.multiply(new Vector4D(dot));
+    private static Vector3D translateDotForFewAxis(Vector3D dot, Matrix4x4 translateMatrix) {
+        if (dot == null) {
+            throw new NullPointerException("Dot vector is null");
+        }
+
+        Vector4D v = translateMatrix.multiply(new Vector4D(dot));
 
         return new Vector3D(v.get(0), v.get(1), v.get(2));
     }
-    public static Matrix4x4 translateMatrix(int axis, double shift) {
+
+    public static Matrix4x4 translateMatrix(char axis, double shift) throws Exception {
+        switch (axis) {
+            case 'x', 'X' -> {
+                return translateMatrix(0, shift);
+            }
+            case 'y', 'Y' -> {
+                return translateMatrix(1, shift);
+            }
+            case 'z', 'Z' -> {
+                return translateMatrix(2, shift);
+            }
+            default -> throw new TranslateException("invalid axis specified");
+        }
+    }
+    private static Matrix4x4 translateMatrix(int axis, double shift) {
         final int SIZE = 4;
         double[][] arr = new double[SIZE][SIZE];
 

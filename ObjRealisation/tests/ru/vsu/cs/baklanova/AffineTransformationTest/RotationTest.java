@@ -17,7 +17,7 @@ public class RotationTest {
         vertex.add(new Vector3D(-2.0, 0.0, 0.1));
 
         Model result = new Model(vertex, new ArrayList<>(), vertex, new ArrayList<>());
-        Rotation.rotateModelDegrees(result, 'z', 0);
+        result = Rotation.rotateModelDegrees(result, 'z', 0);
         ArrayList<Vector3D> vertices = result.vertices;
         ArrayList<Vector3D> normals = result.normals;
         ArrayList<Vector3D> expected = new ArrayList<>();
@@ -40,7 +40,7 @@ public class RotationTest {
         vertex.add(new Vector3D(-2.0, 0.0, 0.1));
 
         Model result = new Model(vertex, new ArrayList<>(), vertex, new ArrayList<>());
-        Rotation.rotateModelDegrees(result, 'x', 360);
+        result = Rotation.rotateModelDegrees(result, 'x', 360);
         ArrayList<Vector3D> vertices = result.vertices;
         ArrayList<Vector3D> normals = result.normals;
         ArrayList<Vector3D> expected = new ArrayList<>();
@@ -63,8 +63,8 @@ public class RotationTest {
         vertex.add(new Vector3D(-2.0, 1.0, 0.1));
 
         Model result = new Model(vertex, new ArrayList<>(), vertex, new ArrayList<>());
-        Rotation.rotateModelDegrees(result, 'y', 124);
-        Rotation.rotateModelDegrees(result, 'y', -124);
+        result = Rotation.rotateModelDegrees(result, 'y', 124);
+        result = Rotation.rotateModelDegrees(result, 'y', -124);
         ArrayList<Vector3D> vertices = result.vertices;
         ArrayList<Vector3D> normals = result.normals;
         ArrayList<Vector3D> expected = new ArrayList<>();
@@ -89,7 +89,8 @@ public class RotationTest {
         normal.add(new Vector3D(-2.0, 1.0, 0.1));
 
         Model result = new Model(vertex, new ArrayList<>(), normal, new ArrayList<>());
-        Rotation.rotateModelDegrees(result, 'x', 180);
+        result = Rotation.rotateModelDegrees(result, 'x', 180);
+
         ArrayList<Vector3D> vertices = result.vertices;
         ArrayList<Vector3D> normals = result.normals;
         ArrayList<Vector3D> expected = new ArrayList<>();
@@ -117,7 +118,7 @@ public class RotationTest {
         char[] axis = new char[]{'X', 'y', 'Z'};
         double[] angles = new double[]{450, 90, 90};
 
-        Rotation.rotateModelFewTimesDegrees(result, axis, angles);
+        result = Rotation.rotateModelFewTimesDegrees(result, axis, angles);
 
         ArrayList<Vector3D> vertices = result.vertices;
         ArrayList<Vector3D> normals = result.normals;
@@ -147,10 +148,10 @@ public class RotationTest {
         char[] axis = new char[]{'X', 'y', 'Z'};
         double[] angles = new double[]{70, 50, -200};
 
-        Rotation.rotateModelDegrees(result1, 'x', 70);
-        Rotation.rotateModelDegrees(result1, 'y', 50);
-        Rotation.rotateModelDegrees(result1, 'z', -200);
-        Rotation.rotateModelFewTimesDegrees(result2, axis, angles);
+        result1 = Rotation.rotateModelDegrees(result1, 'x', 70);
+        result1 = Rotation.rotateModelDegrees(result1, 'y', 50);
+        result1 = Rotation.rotateModelDegrees(result1, 'z', -200);
+        result2 = Rotation.rotateModelFewTimesDegrees(result2, axis, angles);
 
         ArrayList<Vector3D> vertices1 = result1.vertices;
         ArrayList<Vector3D> vertices2 = result2.vertices;
@@ -180,8 +181,8 @@ public class RotationTest {
         double[] angles1 = new double[]{90, 45, -30};
         double[] angles2 = new double[]{Math.PI / 2, Math.PI / 4, - Math.PI / 6};
 
-        Rotation.rotateModelFewTimesDegrees(result1, axis, angles1);
-        Rotation.rotateModelFewTimesRadians(result2, axis, angles2);
+        result1 = Rotation.rotateModelFewTimesDegrees(result1, axis, angles1);
+        result2 = Rotation.rotateModelFewTimesRadians(result2, axis, angles2);
 
         ArrayList<Vector3D> vertices1 = result1.vertices;
         ArrayList<Vector3D> vertices2 = result2.vertices;
@@ -276,13 +277,12 @@ public class RotationTest {
         try {
             Rotation.rotateModelRadians(model, 'x', 3);
         } catch (Exception ex) {
-            throw ex;
-            //String expectedError = "Dot vector is null";
-            //Assertions.assertEquals(expectedError, ex.getMessage());
+            String expectedError = "Dot vector is null";
+            Assertions.assertEquals(expectedError, ex.getMessage());
         }
     }
     @Test
-    public void testRotateMatrixFewTimesWithTooMuchAngles() {
+    public void testRotateModelFewTimesWithTooMuchAngles() {
         ArrayList<Vector3D> vertex = new ArrayList<>();
         vertex.add(new Vector3D(-2.0, 1.0, 0.1));
 
@@ -296,7 +296,7 @@ public class RotationTest {
     }
 
     @Test
-    public void testRotateMatrixFewTimesWithTooMuchAxis() {
+    public void testRotateModelFewTimesWithTooMuchAxis() {
         ArrayList<Vector3D> vertex = new ArrayList<>();
         vertex.add(new Vector3D(-2.0, 1.0, 0.1));
 

@@ -4,8 +4,10 @@ import ru.vsu.cs.baklanova.Math.matrix.Matrix3x3;
 import ru.vsu.cs.baklanova.Math.vector.Vector3D;
 import ru.vsu.cs.baklanova.model.Model;
 
+import java.util.ArrayList;
+
 public class Rotation {
-    public static void rotateModelFewTimesDegrees(Model model, char[] axis, double[] anglesInDegrees) throws Exception {
+    public static Model rotateModelFewTimesDegrees(Model model, char[] axis, double[] anglesInDegrees) throws Exception {
         if (model == null) {
             throw new NullPointerException("Model is null");
         }
@@ -15,30 +17,48 @@ public class Rotation {
         for (int i = 0; i < axis.length; i++) {
             anglesInDegrees[i] = Math.toRadians(anglesInDegrees[i]);
         }
-        rotateModelFewTimesRadians(model, axis, anglesInDegrees);
+
+        return rotateModelFewTimesRadians(model, axis, anglesInDegrees);
     }
-    public static void rotateModelFewTimesRadians(Model model, char[] axis, double[] anglesInRadians) throws Exception {
-        if (model == null) {
+    public static Model rotateModelFewTimesRadians(Model model1, char[] axis, double[] anglesInRadians) throws Exception {
+        if (model1 == null) {
             throw new NullPointerException("Model is null");
         }
         if (axis.length != anglesInRadians.length) {
             throw new RotateExceptions("axis number not equal to angles");
         }
+
+        Model model = new Model(new ArrayList<>(model1.vertices), new ArrayList<>(model1.textureVertices),
+                new ArrayList<>(model1.normals), new ArrayList<>(model1.polygons));
         for (int i = 0; i < axis.length; i++) {
-            rotateModelRadians(model, axis[i], anglesInRadians[i]);
+            model = rotateModelRadians(model, axis[i], anglesInRadians[i]);
         }
+
+        return model;
     }
-    public static void rotateModelDegrees(Model model, char axis, double angleInDegrees) throws RotateExceptions {
-        rotateModelRadians(model, axis, Math.toRadians(angleInDegrees));
+    public static Model rotateModelDegrees(Model model, char axis, double angleInDegrees) throws RotateExceptions {
+        return rotateModelRadians(model, axis, Math.toRadians(angleInDegrees));
     }
-    public static void rotateModelRadians(Model model, char axis, double angleInRadians) throws RotateExceptions {
-        if (model == null) {
+    public static Model rotateModelRadians(Model model1, char axis, double angleInRadians) throws RotateExceptions {
+        if (model1 == null) {
             throw new NullPointerException("Model is null");
         }
-        Matrix3x3 scaleMatrix = rotationMatrixInRadians(axis, angleInRadians);
-        model.vertices.replaceAll(scaleMatrix::multiply);
-        model.normals.replaceAll(scaleMatrix::multiply);
 
+        Model model = new Model(new ArrayList<>(model1.vertices), new ArrayList<>(model1.textureVertices),
+                new ArrayList<>(model1.normals), new ArrayList<>(model1.polygons));
+        Matrix3x3 rotationMatrix = rotationMatrixInRadians(axis, angleInRadians);
+        model.vertices.replaceAll(v -> rotateDot(v, rotationMatrix));
+        model.normals.replaceAll(v -> rotateDot(v, rotationMatrix));
+
+        return model;
+    }
+
+    private static Vector3D rotateDot(Vector3D dot, Matrix3x3 rotationMatrix) {
+        if (dot == null) {
+            throw new NullPointerException("Dot vector is null");
+        }
+
+        return rotationMatrix.multiply(dot);
     }
 
     public static Matrix3x3 rotationMatrixInDegrees(char axis, double fi) throws RotateExceptions {

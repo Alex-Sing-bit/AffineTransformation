@@ -18,7 +18,7 @@ public class ScaleTest {
         vertex.add(new Vector3D(-2.0, 0.0, 0.1));
 
         Model result = new Model(vertex, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        Scale.scaleModel(result, new Vector3D(0.0, 0.0, 0.0));
+        result = Scale.scaleModel(result, new Vector3D(0.0, 0.0, 0.0));
 
         Assertions.assertEquals(0.0, result.vertices.get(0).get(0), 10e-5);
         Assertions.assertEquals(0.0, result.vertices.get(0).get(1), 10e-5);
@@ -32,7 +32,7 @@ public class ScaleTest {
         vertex.add(new Vector3D(2.0, 0.0, -0.1));
 
         Model result = new Model(vertex, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        Scale.scaleModel(result, new Vector3D(1.0, 1.0, 1.0));
+        result = Scale.scaleModel(result, new Vector3D(1.0, 1.0, 1.0));
 
         Assertions.assertEquals(2.0, result.vertices.get(0).get(0), 10e-5);
         Assertions.assertEquals(0.0, result.vertices.get(0).get(1), 10e-5);
@@ -47,7 +47,7 @@ public class ScaleTest {
         vertex.add(new Vector3D(4.0, 11.0, 0.0));
 
         Model result = new Model(vertex, new ArrayList<Vector3D>(), new ArrayList<Vector3D>(), new ArrayList<Polygon>());
-        Scale.scaleModel(result, new Vector3D(3.0, -1.0, 4.0));
+        result = Scale.scaleModel(result, new Vector3D(3.0, -1.0, 4.0));
 
         Assertions.assertEquals(6.0, result.vertices.get(0).get(0), 10e-5);
         Assertions.assertEquals(-1.0, result.vertices.get(0).get(1), 10e-5);
@@ -69,7 +69,7 @@ public class ScaleTest {
         normals.add(new Vector3D(4.0, 11.0, 0.0));
 
         Model result = new Model(new ArrayList<Vector3D>(), new ArrayList<Vector3D>(), normals, new ArrayList<Polygon>());
-        Scale.scaleModel(result, new Vector3D(3.0, -1.0, 4.0));
+        result = Scale.scaleModel(result, new Vector3D(3.0, -1.0, 4.0));
 
         Assertions.assertEquals(6.0, result.normals.get(0).get(0), 10e-5);
         Assertions.assertEquals(-1.0, result.normals.get(0).get(1), 10e-5);
@@ -90,7 +90,7 @@ public class ScaleTest {
         normal.add(new Vector3D(-2.0, 0.0, 0.1));
 
         Model result = new Model(new ArrayList<Vector3D>(), new ArrayList<Vector3D>(), normal, new ArrayList<Polygon>());
-        Scale.scaleModel(result, new Vector3D(0.0, 0.0, 0.0));
+        result = Scale.scaleModel(result, new Vector3D(0.0, 0.0, 0.0));
 
         Assertions.assertEquals(0.0, result.normals.get(0).get(0), 10e-5);
         Assertions.assertEquals(0.0, result.normals.get(0).get(1), 10e-5);
@@ -104,7 +104,7 @@ public class ScaleTest {
         normal.add(new Vector3D(2.0, 0.0, -0.1));
 
         Model result = new Model(new ArrayList<Vector3D>(), new ArrayList<Vector3D>(), normal, new ArrayList<Polygon>());
-        Scale.scaleModel(result, new Vector3D(1.0, 1.0, 1.0));
+        result = Scale.scaleModel(result, new Vector3D(1.0, 1.0, 1.0));
 
         Assertions.assertEquals(2.0, result.normals.get(0).get(0), 10e-5);
         Assertions.assertEquals(0.0, result.normals.get(0).get(1), 10e-5);
@@ -173,12 +173,15 @@ public class ScaleTest {
     @Test
     public void testScaleMatrix() {
         Matrix3x3 matrix = Scale.scaleMatrix(new Vector3D(-0.67, 123, 0));
+
         double[][] result = matrix.getMatrix();
         double[][] expectedResult = new double[][]{{-0.67, 0, 0}, {0, 123, 0}, {0, 0, 0}};
+
         int expectedLength = expectedResult.length;
         int expectedDepth = expectedResult[0].length;
         Assertions.assertEquals(result.length, expectedLength);
         Assertions.assertEquals(result[0].length, expectedDepth);
+
         for (int i = 0; i < expectedLength; i++) {
             for (int j = 0; j < expectedDepth; j++) {
                 Assertions.assertEquals(expectedResult[i][j], result[i][j], 10e-15);

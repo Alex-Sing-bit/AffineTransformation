@@ -33,14 +33,15 @@ public class Main {
         System.out.println("Normals: " + model.normals.size());
         System.out.println("Polygons: " + model.polygons.size());
 
-        Scale.scaleModel(model, new Vector3D(1, 2, 1));
+       // Scale.scaleModel(model, new Vector3D(1, 2, 1));
 
-        Rotation.rotateModelDegrees(model, 'x', 90);
-        //Rotation.rotateModelDegrees(model, 'y', 90);
-        //Rotation.rotateModelDegrees(model, 'z', 90);
-        //Translation.translateModelRadiansForFewAxis(model, 10, 20, 30);
+
+        Model model1 = Rotation.rotateModelDegrees(model, 'x', 90);;
+        model1 = Translation.translateModelForFewAxis(model1, 10, 20, 30);
+        model = Scale.scaleModel(model, new Vector3D(2, 1, 1));
 
         ObjWriter.write(model,"result");
+        ObjWriter.write(model1,"result1");
     }
 
     public static final float eps = 1e-7f;
