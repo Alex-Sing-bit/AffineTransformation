@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 public class RotationTest {
-    public static double EXP = 10e-15;
+    public final int SIZE = 3;
+
+    public final double DELTA = 10e-15;
     @Test
     public void TestRotateModel1() throws Exception {
         ArrayList<Vector3D> vertex = new ArrayList<Vector3D>();
@@ -25,11 +27,10 @@ public class RotationTest {
 
         for (int j = 0; j < expected.size(); j++) {
             Vector3D vector = expected.get(j);
-            final int SIZE = 3;
             for (int i = 0; i < SIZE; i++) {
                 double expectedNum = vector.get(i);
-                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), EXP);
-                Assertions.assertEquals(expectedNum, normals.get(j).get(i), EXP);
+                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), DELTA);
+                Assertions.assertEquals(expectedNum, normals.get(j).get(i), DELTA);
             }
         }
     }
@@ -48,11 +49,10 @@ public class RotationTest {
 
         for (int j = 0; j < expected.size(); j++) {
             Vector3D vector = expected.get(j);
-            final int SIZE = 3;
             for (int i = 0; i < SIZE; i++) {
                 double expectedNum = vector.get(i);
-                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), EXP);
-                Assertions.assertEquals(expectedNum, normals.get(j).get(i), EXP);
+                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), DELTA);
+                Assertions.assertEquals(expectedNum, normals.get(j).get(i), DELTA);
             }
         }
     }
@@ -72,11 +72,10 @@ public class RotationTest {
 
         for (int j = 0; j < expected.size(); j++) {
             Vector3D vector = expected.get(j);
-            final int SIZE = 3;
             for (int i = 0; i < SIZE; i++) {
                 double expectedNum = vector.get(i);
-                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), EXP);
-                Assertions.assertEquals(expectedNum, normals.get(j).get(i), EXP);
+                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), DELTA);
+                Assertions.assertEquals(expectedNum, normals.get(j).get(i), DELTA);
             }
         }
     }
@@ -98,11 +97,10 @@ public class RotationTest {
 
         for (int j = 0; j < expected.size(); j++) {
             Vector3D vector = expected.get(j);
-            final int SIZE = 3;
             for (int i = 0; i < SIZE; i++) {
                 double expectedNum = vector.get(i);
-                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), EXP);
-                Assertions.assertEquals(expectedNum, normals.get(j).get(i), EXP);
+                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), DELTA);
+                Assertions.assertEquals(expectedNum, normals.get(j).get(i), DELTA);
             }
         }
     }
@@ -127,11 +125,10 @@ public class RotationTest {
 
         for (int j = 0; j < expected.size(); j++) {
             Vector3D vector = expected.get(j);
-            final int SIZE = 3;
             for (int i = 0; i < SIZE; i++) {
                 double expectedNum = vector.get(i);
-                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), EXP);
-                Assertions.assertEquals(expectedNum, normals.get(j).get(i), EXP);
+                Assertions.assertEquals(expectedNum, vertices.get(j).get(i), DELTA);
+                Assertions.assertEquals(expectedNum, normals.get(j).get(i), DELTA);
             }
         }
     }
@@ -145,12 +142,13 @@ public class RotationTest {
 
         Model result1 = new Model(vertex1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         Model result2 = new Model(vertex2, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        char[] axis = new char[]{'X', 'y', 'Z'};
-        double[] angles = new double[]{70, 50, -200};
+        char[] axis = new char[]{'X', 'y', 'Z', 'x'};
+        double[] angles = new double[]{70, 50, -200, 30};
 
         result1 = Rotation.rotateModelDegrees(result1, 'x', 70);
         result1 = Rotation.rotateModelDegrees(result1, 'y', 50);
         result1 = Rotation.rotateModelDegrees(result1, 'z', -200);
+        result1 = Rotation.rotateModelDegrees(result1, 'x', 30);
         result2 = Rotation.rotateModelFewTimesDegrees(result2, axis, angles);
 
         ArrayList<Vector3D> vertices1 = result1.vertices;
@@ -159,11 +157,10 @@ public class RotationTest {
         for (int j = 0; j < vertices1.size(); j++) {
             Vector3D vector1 = vertices1.get(j);
             Vector3D vector2 = vertices2.get(j);
-            final int SIZE = 3;
             for (int i = 0; i < SIZE; i++) {
                 double expectedNum1 = vector1.get(i);
                 double expectedNum2 = vector2.get(i);
-                Assertions.assertTrue(Math.abs(expectedNum1 - expectedNum2) < EXP);
+                Assertions.assertTrue(Math.abs(expectedNum1 - expectedNum2) < DELTA);
             }
         }
     }
@@ -190,11 +187,10 @@ public class RotationTest {
         for (int j = 0; j < vertices1.size(); j++) {
             Vector3D vector1 = vertices1.get(j);
             Vector3D vector2 = vertices2.get(j);
-            final int SIZE = 3;
             for (int i = 0; i < SIZE; i++) {
                 double expectedNum1 = vector1.get(i);
                 double expectedNum2 = vector2.get(i);
-                Assertions.assertTrue(Math.abs(expectedNum1 - expectedNum2) < EXP);
+                Assertions.assertTrue(Math.abs(expectedNum1 - expectedNum2) < DELTA);
             }
         }
     }
@@ -324,7 +320,7 @@ public class RotationTest {
 
         for (int i = 0; i < expectedLength; i++) {
             for (int j = 0; j < expectedDepth; j++) {
-                Assertions.assertEquals(expectedResult[i][j], result[i][j], EXP);
+                Assertions.assertEquals(expectedResult[i][j], result[i][j], DELTA);
             }
         }
     }
@@ -345,7 +341,7 @@ public class RotationTest {
 
         for (int i = 0; i < expectedLength; i++) {
             for (int j = 0; j < expectedDepth; j++) {
-                Assertions.assertEquals(expectedResult[i][j], result[i][j], EXP);
+                Assertions.assertEquals(expectedResult[i][j], result[i][j], DELTA);
             }
         }
     }
