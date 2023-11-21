@@ -33,17 +33,27 @@ public class Main {
         System.out.println("Normals: " + model.normals.size());
         System.out.println("Polygons: " + model.polygons.size());
 
-       // Scale.scaleModel(model, new Vector3D(1, 2, 1));
 
+        Model model1 = Rotation.rotateModelFewTimesDegrees(model, new char[]{'x', 'y', 'z'}, new double[] {90, -90, 90});
 
-        Model model1 = Rotation.rotateModelDegrees(model, 'x', 90);;
-        model1 = Translation.translateModelForFewAxis(model1, 10, 20, 30);
+        //Y направлен вниз?
+
+        model = Rotation.rotateModelDegrees(model, 'y', 90);
+        model = Scale.scaleModel(model, new Vector3D(1, 2, 1));
+
+        model1 = Translation.translateModelForFewAxis(model1, new Vector3D(10, 20, 30));
         model = Scale.scaleModel(model, new Vector3D(2, 1, 1));
 
         ObjWriter.write(model,"result");
         ObjWriter.write(model1,"result1");
+
+
+        /*Affine a = new Affine();
+        a.add(new Translate(1, 2, 3));
+        a.add(new Rotate(Axis.X, 10));
+        a.add(new Rotate(Axis.Y, 20));
+        a.apply(model);
+
+        new AffineBuilder().translate(5, 5, 5).rotate(Axis.X, 7).scale().byX(4).byY(5).end().moveByX(5).build().apply(model)*/
     }
-
-    public static final float eps = 1e-7f;
-
 }
