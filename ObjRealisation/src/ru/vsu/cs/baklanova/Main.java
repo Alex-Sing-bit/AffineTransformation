@@ -1,9 +1,8 @@
 package ru.vsu.cs.baklanova;
 
-import ru.vsu.cs.baklanova.AffineTransformation.Rotation;
-import ru.vsu.cs.baklanova.AffineTransformation.Scale;
-import ru.vsu.cs.baklanova.AffineTransformation.Translation;
-import ru.vsu.cs.baklanova.Math.vector.Vector3D;
+import ru.vsu.cs.baklanova.Affine.AffineBuilder;
+import ru.vsu.cs.baklanova.Affine.AxisEnum;
+import ru.vsu.cs.baklanova.math.vector.Vector3D;
 import ru.vsu.cs.baklanova.model.Model;
 import ru.vsu.cs.baklanova.objreader.ObjReader;
 import ru.vsu.cs.baklanova.objreader.PathReadException;
@@ -34,18 +33,25 @@ public class Main {
         System.out.println("Polygons: " + model.polygons.size());
 
 
-        Model model1 = Rotation.rotateModelFewTimesDegrees(model, new char[]{'x', 'y', 'z'}, new double[] {90, -90, 90});
+        //Model model1 = Rotation.rotateModelFewTimesDegrees(model, new char[]{'x', 'y', 'z'}, new double[] {90, -90, 90});
 
         //Y направлен вниз?
 
-        model = Rotation.rotateModelDegrees(model, 'y', 90);
-        model = Scale.scaleModel(model, new Vector3D(1, 2, 1));
+        //model = Rotation.rotateModelDegrees(model, 'y', 90);
+        //model = Scale.scaleModel(model, new Vector3D(1, 2, 1));
 
-        model1 = Translation.translateModelForFewAxis(model1, new Vector3D(10, 20, 30));
-        model = Scale.scaleModel(model, new Vector3D(2, 1, 1));
+        //model1 = Translation.translateModelForFewAxis(model1, new Vector3D(10, 20, 30));
+        //model = Scale.scaleModel(model, new Vector3D(2, 1, 1));
 
-        ObjWriter.write(model,"result");
-        ObjWriter.write(model1,"result1");
+        //new AffineBuilder().scale(new Vector3D(1, 1, 1)).translate(new Vector3D(5, 5, 5))
+         //       .rotateInRadians(AxisEnum.Y, 3).applyModel(model);
+
+        AffineBuilder a = new AffineBuilder();
+        a.rotateInDegrees(AxisEnum.Y, 180).scale(new Vector3D(1, 2, 1)).returnChangedModel(model);
+        a.rotateInDegrees(AxisEnum.X, 120);
+        Model model1 = a.returnChangedModel(model);
+        ObjWriter.write(model1,"result");
+        //ObjWriter.write(model1,"result1");
 
 
         /*Affine a = new Affine();
@@ -55,5 +61,7 @@ public class Main {
         a.apply(model);
 
         new AffineBuilder().translate(5, 5, 5).rotate(Axis.X, 7).scale().byX(4).byY(5).end().moveByX(5).build().apply(model)*/
+
+
     }
 }

@@ -1,6 +1,6 @@
 package ru.vsu.cs.baklanova.MathTests;
 
-import ru.vsu.cs.baklanova.Math.vector.Vector4D;
+import ru.vsu.cs.baklanova.math.vector.Vector4D;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

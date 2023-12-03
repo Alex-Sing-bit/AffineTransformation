@@ -1,8 +1,8 @@
 package ru.vsu.cs.baklanova.AffineTransformationTest;
 import ru.vsu.cs.baklanova.AffineTransformation.RotateExceptions;
 import ru.vsu.cs.baklanova.AffineTransformation.Rotation;
-import ru.vsu.cs.baklanova.Math.matrix.Matrix3x3;
-import  ru.vsu.cs.baklanova.Math.vector.Vector3D;
+import ru.vsu.cs.baklanova.math.matrix.Matrix3x3;
+import  ru.vsu.cs.baklanova.math.vector.Vector3D;
 import  ru.vsu.cs.baklanova.model.Model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

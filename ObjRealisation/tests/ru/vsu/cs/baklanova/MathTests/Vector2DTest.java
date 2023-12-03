@@ -1,7 +1,7 @@
 package ru.vsu.cs.baklanova.MathTests;
 import static org.junit.Assert.*;
 
-import ru.vsu.cs.baklanova.Math.vector.Vector2D;
+import ru.vsu.cs.baklanova.math.vector.Vector2D;
 import org.junit.Test;
 
 public class Vector2DTest {

@@ -1,6 +1,6 @@
-package ru.vsu.cs.baklanova.Math.matrix;
+package ru.vsu.cs.baklanova.math.matrix;
 
-import ru.vsu.cs.baklanova.Math.vector.Vector4D;
+import ru.vsu.cs.baklanova.math.vector.Vector4D;
 
 public class Matrix4x4{
     private double[][] matrix = new double[4][4];
@@ -136,5 +136,18 @@ public class Matrix4x4{
         Matrix3x3 m4 = new Matrix3x3(data4);
 
         return (matrix[0][0]*m1.determinate()-matrix[0][1]*m2.determinate()+matrix[0][2]*m3.determinate()-matrix[0][3]*m4.determinate());
+    }
+
+    public Matrix3x3 toMatrix3x3() {
+        final int SIZE = 3;
+        double[][] arr = new double[SIZE][SIZE];
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                arr[i][j] = matrix[i][j];
+            }
+        }
+
+        return new Matrix3x3(arr);
     }
 }

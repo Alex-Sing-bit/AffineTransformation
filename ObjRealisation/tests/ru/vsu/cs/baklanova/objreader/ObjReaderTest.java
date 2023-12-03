@@ -1,13 +1,9 @@
 package ru.vsu.cs.baklanova.objreader;
 
-import ru.vsu.cs.baklanova.Math.vector.Vector2D;
-import ru.vsu.cs.baklanova.Math.vector.Vector3D;
+import ru.vsu.cs.baklanova.math.vector.Vector3D;
 import ru.vsu.cs.baklanova.model.Polygon;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.vsu.cs.baklanova.objreader.IncorrectFileException;
-import ru.vsu.cs.baklanova.objreader.ObjReader;
-import ru.vsu.cs.baklanova.objreader.ObjReaderException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

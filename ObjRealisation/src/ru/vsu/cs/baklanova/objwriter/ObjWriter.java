@@ -1,7 +1,6 @@
 package ru.vsu.cs.baklanova.objwriter;
 
-import ru.vsu.cs.baklanova.Math.vector.Vector3D;
-import ru.vsu.cs.baklanova.Math.vector.Vector2D;
+import ru.vsu.cs.baklanova.math.vector.Vector3D;
 import ru.vsu.cs.baklanova.model.Model;
 import ru.vsu.cs.baklanova.model.Polygon;
 

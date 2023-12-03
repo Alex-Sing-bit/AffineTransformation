@@ -1,7 +1,5 @@
 package ru.vsu.cs.baklanova.model;
-import ru.vsu.cs.baklanova.Math.matrix.Matrix3x3;
-import ru.vsu.cs.baklanova.Math.vector.Vector2D;
-import ru.vsu.cs.baklanova.Math.vector.Vector3D;
+import ru.vsu.cs.baklanova.math.vector.Vector3D;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
-package ru.vsu.cs.baklanova.Math.matrix;
+package ru.vsu.cs.baklanova.math.matrix;
 
-import ru.vsu.cs.baklanova.Math.vector.Vector3D;
+import ru.vsu.cs.baklanova.math.vector.Vector3D;
 
 public class Matrix3x3{
 
@@ -99,5 +99,22 @@ public class Matrix3x3{
     }
     public double determinate(){
         return (matrix[0][0]*matrix[1][1]*matrix[2][2]-(matrix[0][2]*matrix[1][1]*matrix[2][0]) +matrix[0][1]*matrix[1][2]*matrix[2][0]-(matrix[0][1]*matrix[1][0]*matrix[2][2]) +matrix[0][2]*matrix[1][0]*matrix[2][1]-(matrix[0][0]*matrix[1][2]*matrix[2][1]));
+    }
+
+    public Matrix3x3 toMatrix4x4() {
+        final int SIZE = 4;
+        double[][] arr = new double[SIZE][SIZE];
+
+        for (int i = 0; i < SIZE - 1; i++) {
+            System.arraycopy(matrix[i], 0, arr[i], 0, SIZE - 1);
+        }
+
+        for (int i = 0; i < SIZE; i++) {
+            arr[SIZE - 1][i] = 0;
+            arr[i][SIZE - 1] = 0;
+        }
+        arr[SIZE - 1][SIZE - 1] = 1;
+
+        return new Matrix3x3(arr);
     }
 }

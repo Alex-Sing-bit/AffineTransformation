@@ -1,7 +1,7 @@
 package ru.vsu.cs.baklanova.MathTests;
 
-import ru.vsu.cs.baklanova.Math.matrix.Matrix3x3;
-import ru.vsu.cs.baklanova.Math.vector.Vector3D;
+import ru.vsu.cs.baklanova.math.matrix.Matrix3x3;
+import ru.vsu.cs.baklanova.math.vector.Vector3D;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;

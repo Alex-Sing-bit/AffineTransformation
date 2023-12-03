@@ -1,4 +1,4 @@
-package ru.vsu.cs.baklanova.Math.vector;
+package ru.vsu.cs.baklanova.math.vector;
 
 public class Vector3D{
     private double x;
