@@ -1,5 +1,6 @@
 package ru.vsu.cs.baklanova.Affine;
 
+
 import ru.vsu.cs.baklanova.math.matrix.Matrix4x4;
 import ru.vsu.cs.baklanova.math.vector.Vector3D;
 
@@ -21,11 +22,14 @@ public class AffineMatrix {
     }
 
     public static Matrix4x4 translateMatrix(Vector3D vector) {
+        if (vector == null) {
+            throw new NullPointerException("Vector is null");
+        }
         final int SIZE = 4;
         double[][] arr = new double[SIZE][SIZE];
 
         for (int i = 0; i < SIZE; i++) {
-            arr[i][i] = 1;
+            arr[i][i] = 1; //1 для корректности, 0 для билдера
         }
         arr[0][SIZE - 1] = vector.get(0);
         arr[1][SIZE - 1] = vector.get(1);
@@ -34,8 +38,11 @@ public class AffineMatrix {
         return new Matrix4x4(arr);
     }
 
-    public static Matrix4x4 rotateMatrix(int axis, double fi) {
+    public static Matrix4x4 rotateMatrix(int axis, double fi) throws Exception {
         final int SIZE = 3;
+        if (axis > SIZE) {
+            throw new Exception("Wrong axis");
+        }
         final double EXP = 10e-15;
         double[][] arr = new double[SIZE + 1][SIZE + 1];
         double sinFi = Math.sin(fi);
